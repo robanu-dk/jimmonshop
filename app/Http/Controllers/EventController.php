@@ -14,9 +14,12 @@ class EventController extends Controller
      */
     public function index()
     {
+        // Set Timezone
+        date_default_timezone_set("Asia/Jakarta");
+
         return view('events',[
             'title' => 'Events',
-            'events' => Event::latest()->filter(request(['search']))->get()
+            'events' => Event::latest()->filter(request(['search']))->paginate(4)->withQueryString()
         ]);
     }
 
@@ -49,6 +52,9 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        // Set Timezone
+        date_default_timezone_set("Asia/Jakarta");
+
         return view('event', [
             'title' => $event->nama_event,
             'event' => $event

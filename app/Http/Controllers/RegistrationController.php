@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Gender;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,7 +12,8 @@ class RegistrationController extends Controller
     public function index()
     {
         return view('registration.index', [
-            'title' => 'Registration Form'
+            'title' => 'Registration Form',
+            'genders' => Gender::all()
         ]);
     }
 
@@ -20,6 +22,7 @@ class RegistrationController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'username' => ['required','min:4','max:255','unique:users'],
+            'gender_id' => 'required',
             'email' => 'required|email:dns|unique:users',
             'password' => ['required','min:7','max:255']
         ]);

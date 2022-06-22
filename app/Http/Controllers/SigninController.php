@@ -21,10 +21,18 @@ class SigninController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        // Login admin
+        if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
 
             return redirect()->intended('/dashboard');
+        }
+
+        // Login user
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended('/dashboard/my/profile');
         }
 
         return back()->with('loginError', 'Invalid Login, please try again!!!');

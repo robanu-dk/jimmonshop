@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Event;
+use App\Models\RegisterEvent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventDashboardController extends Controller
 {
@@ -46,13 +48,18 @@ class EventDashboardController extends Controller
             'nama_event' => 'required',
             'admin_id' => 'required',
             'slug' => 'required|unique:events',
-            'image' => 'required',
+            'image' => 'image|file|max:10240',
             'pemateri' => 'required',
             'tanggal' => 'required',
             'waktu' => 'required',
             'location' => 'required',
+            'kuota' => 'required|integer',
             'benefits' => 'required'
         ]);
+
+        if($request->file('image')) {
+            $validatedData['image'] = $request->file('image')->store('event-image');
+        }
 
         Event::create($validatedData);
 
@@ -102,11 +109,12 @@ class EventDashboardController extends Controller
         $rules = [
             'nama_event' => 'required',
             'admin_id' => 'required',
-            'image' => 'required',
+            'image' => 'image|file|max:10240',
             'pemateri' => 'required',
             'tanggal' => 'required',
             'waktu' => 'required',
             'location' => 'required',
+            'kuota' => 'required|integer',
             'benefits' => 'required'
         ];
 
@@ -116,9 +124,17 @@ class EventDashboardController extends Controller
 
         $validatedData = $request->validate($rules);
 
+        if($request->file('image')) {
+            if($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+
+            $validatedData['image'] = $request->file('image')->store('event-image');
+        }
+
         Event::where('id', $event->id)->update($validatedData);
 
-        return redirect('/dashboard/events')->with('success','Category has been update!');
+        return redirect('/dashboard/events')->with('success','Event has been update!');
     }
 
     /**
@@ -129,8 +145,23 @@ class EventDashboardController extends Controller
      */
     public function destroy(Event $event)
     {
+        if($event->image) {
+            Storage::delete($event->image);
+        }
+
         Event::destroy($event->id);
 
         return redirect('/dashboard/events')->with('success','Event has been deleted!!');
+    }
+
+    /**
+     * View the list of participants for each event
+     */
+    public function partisipant($id)
+    {
+        return view('dashboard.events.partisipant', [
+            'title' => 'List of participants from event "' . Event::find($id)->nama_event .'"',
+            'partisipants' => Event::find($id)->registerEvent
+        ]);
     }
 }

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\Kategori;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
-class KategoriController extends Controller
+class DashboardUserEventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,10 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.user.events.index',[
+            'title' => 'List of Events to Follow',
+            'events' => Event::all()
+        ]);
     }
 
     /**
@@ -42,25 +44,24 @@ class KategoriController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Kategori  $kategori
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show(Kategori $kategori)
+    public function show($id)
     {
-        return view('category', [
-            'title' => $kategori->nama_kategori,
-            'category' => $kategori,
-            'products' => Product::latest()->where('kategori_id','like',$kategori->id)->filter(request(['search']))->get()
+        return view('dashboard.user.events.show',[
+            'title' => 'Detail of ' . Event::find($id)->nama_event,
+            'event' => Event::find($id)
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Kategori  $kategori
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kategori $kategori)
+    public function edit(Event $event)
     {
         //
     }
@@ -69,10 +70,10 @@ class KategoriController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kategori  $kategori
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kategori $kategori)
+    public function update(Request $request, Event $event)
     {
         //
     }
@@ -80,10 +81,10 @@ class KategoriController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Kategori  $kategori
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kategori $kategori)
+    public function destroy(Event $event)
     {
         //
     }

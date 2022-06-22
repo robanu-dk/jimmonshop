@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Admin;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductDashboardController extends Controller
 {
@@ -49,11 +50,15 @@ class ProductDashboardController extends Controller
             'slug' => 'required|unique:products',
             'kategori_id' => 'required',
             'admin_id' => 'required',
-            'image' => 'required',
+            'image' => 'image|file|max:10240',
             'jumlah' => 'required',
             'harga' => 'required',
             'deskripsi' => 'required',
         ]);
+
+        if($request->file('image')) {
+            $validatedData['image'] = $request->file('image')->store('product-image');
+        }
 
         Product::create($validatedData);
 
@@ -103,7 +108,7 @@ class ProductDashboardController extends Controller
             'nama_produk' => 'required',
             'kategori_id' => 'required',
             'admin_id' => 'required',
-            'image' => 'required',
+            'image' => 'image|file|max:10240',
             'jumlah' => 'required',
             'harga' => 'required',
             'deskripsi' => 'required',
@@ -114,6 +119,14 @@ class ProductDashboardController extends Controller
         }
 
         $validatedData = $request->validate($rules);
+
+        if($request->file('image')) {
+            if($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+
+            $validatedData['image'] = $request->file('image')->store('product-image');
+        }
 
         Product::where('id',$product->id)->update($validatedData);
 
@@ -128,6 +141,11 @@ class ProductDashboardController extends Controller
      */
     public function destroy(Product $product)
     {
+
+        if($product->image) {
+            Storage::delete($product->image);
+        }
+
         Product::destroy($product->id);
 
         return redirect('/dashboard/products')->with('success','Product has been deleted');

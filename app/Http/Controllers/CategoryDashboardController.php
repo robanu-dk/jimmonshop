@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryDashboardController extends Controller
 {
@@ -47,8 +48,12 @@ class CategoryDashboardController extends Controller
             'admin_id' => 'required',
             'slug' => 'required|unique:kategoris',
             'keterangan' => 'required',
-            'image' => 'required',
+            'image' => 'image|file|max:10240',
         ]);
+
+        if($request->file('image')) {
+            $validatedData['image'] = $request->file('image')->store('category-image');
+        }
 
         Kategori::create($validatedData);
 
@@ -98,7 +103,7 @@ class CategoryDashboardController extends Controller
         $rules = [
             'nama_kategori' => 'required',
             'admin_id' => 'required',
-            'image' => 'required',
+            'image' => 'image|file|max:10240',
             'keterangan' => 'required'
         ];
 
@@ -107,6 +112,14 @@ class CategoryDashboardController extends Controller
         }
 
         $validatedData = $request->validate($rules);
+
+        if($request->file('image')) {
+            if($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+
+            $validatedData['image'] = $request->file('image')->store('category-image');
+        }
 
         Kategori::where('id', $kategori->id)->update($validatedData);
 
@@ -122,6 +135,10 @@ class CategoryDashboardController extends Controller
      */
     public function destroy(Kategori $kategori)
     {
+        if($kategori->image) {
+            Storage::delete($kategori->image);
+        }
+
         Kategori::destroy($kategori->id);
 
         return redirect('/dashboard/categories')->with('success','Category has been deleted!!');
