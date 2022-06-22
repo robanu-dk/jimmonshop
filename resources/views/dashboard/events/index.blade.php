@@ -14,11 +14,13 @@
             <thead class="table-dark">
               <tr>
                 <th scope="col">No.</th>
-                <th scope="col" style="width: 25%">Name of Event</th>
-                <th scope="col" style="width: 25%">Speaker</th>
+                <th scope="col" style="width: 15%">Name of Event</th>
+                <th scope="col" style="width: 10%">Speaker</th>
                 <th scope="col" style="width: 10%">Date</th>
                 <th scope="col" style="width: 10%">Time</th>
                 <th scope="col" style="width: 15%">Location</th>
+                <th scope="col" style="width: 5%">Quota</th>
+                <th scope="col" style="width: 5%">Partisipant</th>
                 <th scope="col" style="text-align: center; width: *">Action</th>
               </tr>
             </thead>
@@ -31,7 +33,9 @@
                         <td>{{ $ev->tanggal }}</td>
                         <td>{{ $ev->waktu }}</td>
                         <td>{{ $ev->location }}</td>
-                        <td>
+                        <td>{{ $ev->kuota }}</td>
+                        <td class="text-center"><a href="/dashboard/events/{{ $ev->id }}/partisipant">{{ $ev->registerEvent->count() }}</a></td>
+                        <td class="text-center">
                             <a href="/dashboard/events/{{ $ev->slug }}" class="badge bg-info"><img src={{ asset('feather/eye.svg') }} alt=""></a>
                             <a href="/dashboard/events/{{ $ev->slug }}/edit" class="badge bg-warning"><img src={{ asset('feather/edit.svg') }} alt=""></a>
                             <form action="/dashboard/events/{{ $ev->slug }}" method="POST" class="d-inline">

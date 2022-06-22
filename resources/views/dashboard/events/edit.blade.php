@@ -3,7 +3,7 @@
 @section('content')
     <div class="content" style="padding-bottom: 40px">
         <div class="col-lg-8" style="padding-bottom: 10px">
-            <form method="POST" action="/dashboard/events/{{ $event->slug }}">
+            <form method="POST" action="/dashboard/events/{{ $event->slug }}" enctype="multipart/form-data">
                 @method('put')
                 @csrf
                 <div class="mb-3">
@@ -23,7 +23,7 @@
                     <label for="admin_id" class="form-label">Admin</label> <br>
                     <select class="form-select" name="admin_id" id="admin_id">
                         @foreach ($admins as $admin)
-                            @if (old('admin_id') == $admin->id)
+                            @if (old('admin_id', $event->admin_id) == $admin->id)
                                 <option value={{ $admin->id }} selected>{{ $admin->name }}</option>
                             @else
                                 <option value={{ $admin->id }}>{{ $admin->name }}</option>
@@ -33,7 +33,18 @@
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Image</label>
-                    <input type="text" class="form-control" id="image" name="image" required value="{{ old('image',$event->image) }}">
+                    <input type="hidden" name="oldImage" value="{{ $event->image }}">
+                    @if ($event->image)
+                        <img src="{{ asset($event->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block">
+                    @else
+                        <img class="img-preview img-fluid mb-3 col-sm-5">
+                    @endif
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" onchange="previewImage()">
+                 @error('image')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                 @enderror
                 </div>
                 <div class="mb-3">
                     <label for="pemateri" class="form-label">Speaker</label>
@@ -52,9 +63,18 @@
                     <input type="text" class="form-control" id="location" name="location" required value="{{ old('location',$event->location) }}">
                 </div>
                 <div class="mb-3">
+                    <label for="kuota" class="form-label">Quota</label>
+                    <input type="number" class="form-control" id="kuota" name="kuota" required value="{{ old('kuota',$event->kuota) }}">
+                </div>
+                <div class="mb-3">
                     <label for="benefits" class="form-label">Benefits</label>
-                    <input id="benefits" type="hidden" name="benefits" required value="{{ old('benefits',$event->benefits) }}">
+                    <input class="@error('benefits') is-invalid @enderror" id="benefits" type="hidden" name="benefits" required value="{{ old('benefits',$event->benefits) }}">
                     <trix-editor input="benefits" style="background-color: white"></trix-editor>
+                    @error('benefits')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Update Event</button>
             </form>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="content" style="padding-bottom: 40px">
         <div class="col-lg-8" style="padding-bottom: 10px">
-            <form method="POST" action="/dashboard/events">
+            <form method="POST" action="/dashboard/events" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="nama_event" class="form-label">Name</label>
@@ -32,7 +32,13 @@
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Image</label>
-                    <input type="text" class="form-control" id="image" name="image" required value="{{ old('image') }}">
+                    <img class="img-preview img-fluid mb-3 col-sm-5">
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" onchange="previewImage()">
+                 @error('image')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                 @enderror
                 </div>
                 <div class="mb-3">
                     <label for="pemateri" class="form-label">Speaker</label>
@@ -51,9 +57,18 @@
                     <input type="text" class="form-control" id="location" name="location" required value="{{ old('location') }}">
                 </div>
                 <div class="mb-3">
+                    <label for="kuota" class="form-label">Quota</label>
+                    <input type="number" class="form-control" id="kuota" name="kuota" required value="{{ old('kuota') }}">
+                </div>
+                <div class="mb-3">
                     <label for="benefits" class="form-label">Benefits</label>
-                    <input id="benefits" type="hidden" name="benefits" required value="{{ old('benefits') }}">
+                    <input class="@error('benefits') is-invalid @enderror" id="benefits" type="hidden" name="benefits" required value="{{ old('benefits') }}">
                     <trix-editor input="benefits" style="background-color: white"></trix-editor>
+                    @error('benefits')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Create Event</button>
             </form>
@@ -70,4 +85,5 @@
                 .then(data => slug.value = data.slug)
         });
     </script> --}}
+
 @endsection

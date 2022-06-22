@@ -3,7 +3,7 @@
 @section('content')
     <div class="content" style="padding-bottom: 40px">
         <div class="col-lg-8" style="padding-bottom: 10px">
-            <form method="POST" action="/dashboard/products">
+            <form method="POST" action="/dashboard/products" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="nama_produk" class="form-label">Name</label>
@@ -44,7 +44,13 @@
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Image</label>
-                    <input type="text" class="form-control" id="image" name="image" required value="{{ old('image') }}">
+                    <img class="img-preview img-fluid mb-3 col-sm-5">
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" onchange="previewImage()">
+                 @error('image')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                 @enderror
                 </div>
                 <div class="mb-3">
                     <label for="jumlah" class="form-label">Stock</label>
@@ -55,9 +61,14 @@
                     <input type="number" class="form-control" id="harga" name="harga" required value="{{ old('harga') }}">
                 </div>
                 <div class="mb-3">
-                    <label for="deskripsi" class="form-label">Description</label>
-                    <input id="deskripsi" type="hidden" name="deskripsi" required value="{{ old('deskripsi') }}">
+                    <label for="deskripsi" class="form-label">Description (Deskripsi)</label>
+                    <input class="@error('deskripsi') is-invalid @enderror" id="deskripsi" type="hidden" name="deskripsi" required value="{{ old('deskripsi') }}">
                     <trix-editor input="deskripsi" style="background-color: white"></trix-editor>
+                    @error('deskripsi')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Create Product</button>
             </form>

@@ -29,7 +29,7 @@
               </p>
             </div>
             <div class="text-end" style="padding: 20px">
-                <a href="#" class="btn btn-primary disabled">Check Partisipant</a>
+                <a href="/dashboard/events/{{ $event->id }}/partisipant" class="btn btn-primary">Check Partisipant</a>
             </div>
           </div>
     </div>

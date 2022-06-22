@@ -3,7 +3,7 @@
 @section('content')
     <div class="content" style="padding-bottom: 40px">
         <div class="col-lg-8" style="padding-bottom: 10px">
-            <form method="POST" action="/dashboard/categories">
+            <form method="POST" action="/dashboard/categories" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="nama_kategori" class="form-label">Name</label>
@@ -32,12 +32,23 @@
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Image</label>
-                    <input type="text" class="form-control" id="image" name="image" required value="{{ old('image') }}">
+                    <img class="img-preview img-fluid mb-3 col-sm-5">
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" onchange="previewImage()">
+                 @error('image')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                 @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="keterangan" class="form-label">Note</label>
-                    <input id="keterangan" type="hidden" name="keterangan" required value="{{ old('keterangan') }}">
+                    <label for="keterangan" class="form-label">Note (Keterangan)</label>
+                    <input class="@error('keterangan') is-invalid @enderror" id="keterangan" type="hidden" name="keterangan" required value="{{ old('keterangan') }}">
                     <trix-editor input="keterangan" style="background-color: white"></trix-editor>
+                    @error('keterangan')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Create Category</button>
             </form>

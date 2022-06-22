@@ -54,13 +54,13 @@
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+        <a class="nav-link disabled" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
         </a>
         <div class="navbar-search-block">
-          <form class="form-inline">
+          <form action="{{ Request::path() }}" class="form-inline">
             <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <input class="form-control form-control-navbar" name="search" type="search" placeholder="Search" aria-label="Search">
               <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
                   <i class="fas fa-search"></i>
@@ -94,14 +94,27 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src={{ asset('admin.png') }} class="img-circle elevation-2" alt="User Image">
+      @auth('admin')
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src={{ asset(Auth::guard('admin')->user()->image) }} class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href='/dashboard' class="d-block">{{ Auth::guard('admin')->user()->name }}</a>
+            </div>
         </div>
-        <div class="info">
-          <a href='#' class="d-block">Admin</a>
-        </div>
-      </div>
+      @else
+      @auth
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img src={{ asset(auth()->user()->image) }} class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+              <a href='/dashboard/my/profile' class="d-block">{{ auth()->user()->name }}</a>
+            </div>
+          </div>
+      @endauth
+      @endauth
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
@@ -136,7 +149,7 @@
     </section>
 
     <!-- Main content -->
-    <section class="content" style="padding-left: 20px">
+    <section class="content" style="padding-left: 20px; padding-bottom: 20px;">
 
       @yield('content')
 
@@ -166,5 +179,25 @@
 <script src="{{ asset('template') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('template') }}/dist/js/adminlte.min.js"></script>
+
+{{-- Preview image when upload image --}}
+<script>
+
+    function previewImage() {
+        const image = document.querySelector('#image');
+        const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(image.files[0]);
+
+        oFReader.onload = function(oFREvent) {
+            imgPreview.src = oFREvent.target.result;
+        }
+    }
+
+</script>
+
 </body>
 </html>
