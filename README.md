@@ -2,6 +2,6 @@
 
 <h2>Created by:</h2>
 <pre>
-Robanu Dakhayin
-Jasmine Yulis Saputri
+Robanu Dakhayin       (082011633027)
+Jasmine Yulis Saputri (082011633001)
 </pre>
