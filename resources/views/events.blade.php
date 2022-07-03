@@ -44,7 +44,7 @@
                                 @elseif($events[0]->tanggal < date("Y-m-d"))
                                     disabled
                                 @endif
-                                @elseif(!($events[0]->registerevent->count() < $events[0]->kuota))
+                                @elseif($events[0]->registerevent->count() == $events[0]->kuota)
                                     disabled
                                 @endif">Register</a>
                         </div>
