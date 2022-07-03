@@ -38,15 +38,17 @@
                             <p class="card-text"><small class="text-muted">Last updated {{ $events[0]->created_at->diffForHumans() }}</small></p>
                         </div>
                         <div class="text-end" style="padding-right: 5%; padding-bottom: 10%">
-                            <a href="/register+event/{{ $events[0]->slug }}" class="btn btn-success @if($events[0]->tanggal <= date("Y-m-d"))
+                            <a href="/register+event/{{ $events[0]->slug }}" class="btn btn-success
+                            @if($events[0]->tanggal <= date("Y-m-d"))
                                 @if($events[0]->tanggal == date("Y-m-d") && $events[0]->waktu <= date('H:i:s'))
-                                    disabled
+                                disabled
                                 @elseif($events[0]->tanggal < date("Y-m-d"))
                                     disabled
                                 @endif
-                                @elseif($events[0]->registerevent->count() == $events[0]->kuota)
-                                    disabled
-                                @endif">Register</a>
+                            @endif
+                            @if(!($events[0]->registerEvent->count() < $events[0]->kuota))
+                                disabled
+                            @endif">Register</a>
                         </div>
                     </div>
                 </div>

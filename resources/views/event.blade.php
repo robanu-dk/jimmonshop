@@ -26,13 +26,15 @@
                         <a href="/events" class="btn btn-danger">Back</a>
                     </td>
                     <td class="text-end" style="width: auto; padding-right: 20px; padding-bottom: 20px">
-                        <a href="/register+event/{{ $event->slug }}" class="btn btn-success @if($event->tanggal <= date("Y-m-d"))
+                        <a href="/register+event/{{ $event->slug }}" class="btn btn-success
+                        @if($event->tanggal <= date("Y-m-d"))
                             @if($event->tanggal == date("Y-m-d") && $event->waktu <= date('H:i:s'))
                                 disabled
                             @elseif($event->tanggal < date("Y-m-d"))
                                 disabled
                             @endif
-                        @elseif(!($event->registerEvent->count() < $event->kuota))
+                        @endif
+                        @if(!($event->registerEvent->count() < $event->kuota))
                             disabled
                         @endif">Register</a>
                     </td>
