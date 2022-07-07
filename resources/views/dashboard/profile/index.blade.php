@@ -14,7 +14,7 @@
                 <td colspan="3" align="center" style="padding-bottom: 5%; padding-top: 5%">
                     <h3><strong>Foto Profile</strong></h3>
                     <div class="image">
-                        <a href="{{ asset($admin->image) }}"><img src="{{ asset($admin->image) }}" class="img-circle elevation-2 mb-3 col-sm-4" alt="User Image"></a>
+                        <a href="{{ asset('storage/' . $admin->image) }}"><img src="{{ asset('storage/' . $admin->image) }}" class="img-circle elevation-2 mb-3 col-sm-4" alt="User Image"></a>
                     </div>
                 </td>
             </tr>
