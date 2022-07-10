@@ -21,7 +21,7 @@
             <tr>
                 <td>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">Names</label>
                         <input style="width: 90%" type="string" class="form-control" id="name" name="name" value="{{ $admin->name }}" disabled>
                     </div>
                 </td>
