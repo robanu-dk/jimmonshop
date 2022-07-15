@@ -9,7 +9,7 @@
 
                     <input type="hidden" name="product_id" id="product_id" value="{{ $produk->id }}">
                     <input type="hidden" name="user_id" id="user_id" value="{{ auth()->user()->id }}">
-                    <input type="hidden" name="keterangan" id="keterangan" value="{{ $data->keterangan }}">
+                    <input type="hidden" name="keterangan" id="keterangan" value="{{ old('keterangan',$data['keterangan']) }}">
 
                     <div class="row text-center mb-4 mt-4" style="font-size: 18px">
                         <div class="col-6">
@@ -74,8 +74,8 @@
                         <div class="col-2">
                             <div class="row">
                                 <div class="col">
-                                    {{ $data->jumlah_barang }}
-                                    <input type="hidden" name="jumlah_barang" id="jumlah_barang" value="{{ $data->jumlah_barang }}">
+                                    {{ old('jumlah_barang',$data['jumlah_barang']) }}
+                                    <input type="hidden" name="jumlah_barang" id="jumlah_barang" value="{{ old('jumlah_barang',$data['jumlah_barang']) }}">
                                 </div>
                             </div>
                             <div class="row border-bottom" style="padding-top: 80%">
@@ -87,18 +87,18 @@
                         <div class="col-2">
                             <div class="row">
                                 <div class="col">
-                                    {{ 'Rp' . ($produk->harga * $data->jumlah_barang) }}
+                                    {{ 'Rp' . old('total_harga',($produk->harga * $data['jumlah_barang'])) }}
                                 </div>
                             </div>
                             <div class="row border-bottom" style="padding-top: 80%">
                                 <div class="col">
-                                    {{ 'Rp' . ($produk->harga * $data->jumlah_barang) }}
+                                    {{ 'Rp' . old('total_harga',($produk->harga * $data['jumlah_barang'])) }}
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    {{ 'Rp' . ($produk->harga * $data->jumlah_barang) }}
-                                    <input type="hidden" name="total_harga" id="total_harga" value="{{ $produk->harga * $data->jumlah_barang }}">
+                                    {{ 'Rp' . old('total_harga',($produk->harga * $data['jumlah_barang'])) }}
+                                    <input type="hidden" name="total_harga" id="total_harga" value="{{ old('total_harga',($produk->harga * $data['jumlah_barang'])) }}">
                                 </div>
                             </div>
                         </div>

@@ -118,7 +118,9 @@ Route::middleware('auth')->group(function() {
 
     Route::resource('/dashboard/my/register_event', DashboardUserEventController::class);
 
-    Route::post('/products/{slug}/purchase', [PurchaseController::class, 'index']);
+    Route::post('/products/{slug}/purchase', [PurchaseController::class, 'purchase']);
+
+    Route::get('/products/{slug}/purchase', [PurchaseController::class, 'index'])->name('purchase_form');
 
     Route::post('/products/{slug}/purchase/confirm', [PurchaseController::class, 'confirm']);
 

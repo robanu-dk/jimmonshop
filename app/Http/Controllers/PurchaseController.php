@@ -8,18 +8,26 @@ use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
 {
-    public function index(Request $request)
+    public function purchase(Request $request)
     {
         $stok = Product::find($request->product_id)->jumlah;
         $request->validate(['jumlah_barang' => ['required','integer','max:'.$stok]]);
 
-        $produk = Product::find($request->product_id);
+        return redirect()->route('purchase_form',['slug'=>$request->slug])->with(['jumlah_barang'=>$request->jumlah_barang,'keterangan'=>$request->keterangan]);
 
+    }
+
+    public function index($request)
+    {
+
+        $data = ['jumlah_barang' => session()->get('jumlah_barang'), 'keterangan' => session()->get('keterangan')];
+        $produk = Product::where('slug',$request)->get();
         return view('purchase.index',[
-            'title' => 'Nota Pembelian ' . $produk->nama_produk,
-            'data' => $request,
-            'produk' => $produk
+            'title' => 'Nota Pembelian ' . $produk[0]->nama_produk,
+            'data' => $data,
+            'produk' => $produk[0]
         ]);
+
     }
 
     public function confirm(Request $request)
@@ -35,9 +43,9 @@ class PurchaseController extends Controller
             'jumlah_barang' => 'required',
             'total_harga' => 'required',
             'metode_pembayaran' => 'required',
-            'RT' => 'required',
-            'RW' => 'required',
-            'kodepos' => 'required'
+            'RT' => 'required|max:3',
+            'RW' => 'required|max:3',
+            'kodepos' => 'required|size:5'
         ]);
 
         $validatedData = $request->only([
