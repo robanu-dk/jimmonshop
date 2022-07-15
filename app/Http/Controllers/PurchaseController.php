@@ -35,7 +35,7 @@ class PurchaseController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'nullable',
-            'noTelp_pembeli' => 'required',
+            'noTelp_pembeli' => 'required|max:13',
             'alamat_jalan' => 'required',
             'alamat_kota_kabupaten' => 'required',
             'alamat_provinsi' => 'required',
