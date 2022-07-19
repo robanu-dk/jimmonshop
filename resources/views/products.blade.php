@@ -13,15 +13,17 @@
             <div class="card-body" style="padding-left: 30px;">
               <p class="card-text">
                 @if ($categories->count())
-                    <div class="card-group" style="padding-right: 15px">
+                    <div class="row" style="padding-right: 15px">
                         @foreach ($categories as $category)
-                        <div class="card">
-                            <a href="\products\category\{{ $category->slug }}" style="text-decoration: none; color: #000">
-                                <img src={{ $category->image }} class="card-img-top" alt=gambar+ {{ $category->slug }}>
-                                <div class="card-body">
-                                    <h5 class="card-title-center">{{ $category->nama_kategori }}</h5>
-                                </div>
-                            </a>
+                        <div class="col">
+                            <div class="card">
+                                <a href="\products\category\{{ $category->slug }}" style="text-decoration: none; color: #000">
+                                    <img src={{ $category->image }} class="card-img-top" alt=gambar+ {{ $category->slug }}>
+                                    <div class="card-body">
+                                        <h5 class="card-title-center">{{ $category->nama_kategori }}</h5>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                         @endforeach
                     </div>
