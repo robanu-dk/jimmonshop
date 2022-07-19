@@ -27,7 +27,7 @@
                                 <label for="keterangan" style="font-size: 14px">Quantity</label>
                                 @error('jumlah_barang')
                                     <div class="invalid-feedback">
-                                        {{ $message }}
+                                        {{ str_replace('jumlah barang','Quantity',$message) }}
                                     </div>
                                 @enderror
                             </div>

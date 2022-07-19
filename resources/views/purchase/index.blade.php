@@ -158,7 +158,7 @@ Name            : Yulis Saputri
                                     <input style="width: 100%" type="string" name="noTelp_pembeli" id="noTelp_pembeli" class="form-control @error('noTelp_pembeli') is-invalid @enderror" id="noTelp_pembeli" placeholder="082011633027" required value="{{ old('noTelp_pembeli') }}">
                                     @error('noTelp_pembeli')
                                         <div class="invalid-feedback">
-                                            {{ $message }}
+                                            {{ str_replace('no telp pembeli','Phone Number',$message) }}
                                         </div>
                                     @enderror
                                 </div>
@@ -184,7 +184,7 @@ Name            : Yulis Saputri
                                     <input style="width: 100%" type="string" name="RT" id="RT" class="form-control @error('RT') is-invalid @enderror" id="RT" placeholder="001" required value="{{ old('RT') }}">
                                     @error('RT')
                                         <div class="invalid-feedback">
-                                            {{ $message }}
+                                            {{ str_replace('The r t must not be greater than 3 characters.','The RT must not be greater than 3 characters.',$message) }}
                                         </div>
                                     @enderror
                                 </div>
@@ -195,7 +195,7 @@ Name            : Yulis Saputri
                                     <input style="width: 100%" type="string" name="RW" id="RW" class="form-control @error('RW') is-invalid @enderror" id="RW" placeholder="001" required value="{{ old('RW') }}">
                                     @error('RW')
                                         <div class="invalid-feedback">
-                                            {{ $message }}
+                                            {{ str_replace('r w','RW',$message) }}
                                         </div>
                                     @enderror
                                 </div>
@@ -247,7 +247,7 @@ Name            : Yulis Saputri
                                     <input style="width: 100%" type="string" name="kodepos" id="kodepos" class="form-control @error('kodepos') is-invalid @enderror" id="kodepos" placeholder="66132" required value="{{ old('kodepos') }}">
                                     @error('kodepos')
                                         <div class="invalid-feedback">
-                                            {{ $message }}
+                                            {{ str_replace('kodepos','Postal Code',$message) }}
                                         </div>
                                     @enderror
                                 </div>
