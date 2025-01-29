@@ -48,15 +48,15 @@ Route::resource('/products', ProductController::class);
 
 Route::get('/products/category/{kategori:slug}', [KategoriController::class,'show']);
 
-Route::get('/sign+in',[SigninController::class,'index'])->name('login')->middleware('guest');
+Route::get('/sign+in',[SigninController::class,'index'])->name('login')->middleware('guest:web,admin');
 
-Route::post('/sign+in',[SigninController::class,'authenticate']);
+Route::post('/sign+in',[SigninController::class,'authenticate'])->middleware('guest:web,admin');
 
 Route::post('/logout',[SigninController::class,'logout']);
 
-Route::get('/registration',[RegistrationController::class,'index'])->middleware('guest');
+Route::get('/registration',[RegistrationController::class,'index'])->middleware('guest:web,admin');
 
-Route::post('/registration',[RegistrationController::class,'store']);
+Route::post('/registration',[RegistrationController::class,'store'])->middleware('guest:web,admin');
 
 Route::middleware('auth:admin')->group(function() {
 

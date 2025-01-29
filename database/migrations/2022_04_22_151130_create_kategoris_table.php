@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('kategoris', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('admin_id');
+            $table->unsignedBigInteger('admin_id');
             $table->string('slug')->unique();
             $table->string('nama_kategori');
             $table->text('keterangan');
             $table->string('image')->default('logo-jimm-on-shop.png');
             $table->timestamps();
+
+            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

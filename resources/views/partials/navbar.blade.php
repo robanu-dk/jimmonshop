@@ -7,16 +7,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link {{ Request::is('events*')? 'active' : ''  }}" href="/events">Events</a>
+            <a class="sink nav-link {{ Request::is('events*')? 'active' : ''  }}" href="/events">Events</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ Request::is('products*')? 'active' : '' }}" aria-expanded="true" href="/products">Products</a>
+            <a class="sink nav-link {{ Request::is('products*')? 'active' : '' }}" aria-expanded="true" href="/products">Products</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ Request::is('about+us*')? 'active' : '' }}" aria-expanded="true" href="/about+us">About Us</a>
+            <a class="sink nav-link {{ Request::is('about+us*')? 'active' : '' }}" aria-expanded="true" href="/about+us">About Us</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ Request::is('contact+us')? 'active' : '' }}" href="/contact+us">Contact Us</a>
+            <a class="sink nav-link {{ Request::is('contact+us')? 'active' : '' }}" href="/contact+us">Contact Us</a>
           </li>
           <li class="nav-item" style="display: {{ Request::is('events/*')? 'none' : '' }} {{ Request::is('contact+us')? 'none' : '' }} {{ Request::is('about+us*')? 'none' : '' }} {{ Request::is('sign+in')? 'none' : '' }} {{ Request::is('registration')? 'none' : '' }}">
             @if (Request::is('/'))
@@ -80,7 +80,7 @@
                 </li>
               @else
                 <li class="nav-item {{ Request::is('sign+in*')? 'active' : '' }}">
-                    <a class="signin bi bi-box-arrow-in-right" href="/sign+in">Sign In</a>
+                    <a class="signin" href="/sign+in">Sign In <i class="bi bi-box-arrow-in-right"></i></a>
                 </li>
               @endauth
               @endauth

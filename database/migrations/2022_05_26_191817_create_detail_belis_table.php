@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('detail_belis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pembelian_id');
-            $table->foreignId('product_id');
+            $table->unsignedBigInteger('pembelian_id');
+            $table->unsignedBigInteger('product_id');
             $table->timestamps();
+
+            $table->foreign('pembelian_id')->references('id')->on('pembelians')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

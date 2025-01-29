@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('pembelians', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('product_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id');
             $table->string('nama_pembeli');
             $table->string('noTelp_pembeli');
             $table->string('alamat_jalan');
@@ -29,6 +29,9 @@ return new class extends Migration
             $table->string('status_pembelian');
             $table->string('keterangan')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

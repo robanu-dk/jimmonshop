@@ -30,7 +30,7 @@ class ProfileDashboardController extends Controller
 
         $rules = [
             'name' => 'required',
-            'image' => 'image|file|max:10240',
+            'image' => 'image|file|max:10240|mimes:png,jpg',
             'kontak' => 'required',
             'provinsi' => 'required',
             'daerah' => 'required',

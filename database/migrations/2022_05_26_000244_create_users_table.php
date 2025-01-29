@@ -13,22 +13,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('username')->unique();
-            $table->string('kontak');
-            $table->string('provinsi');
-            $table->string('daerah');
-            $table->string('kecamatan');
-            $table->string('jalan');
-            $table->string('kodepos');
+            $table->unsignedBigInteger('gender_id');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('image')->default('admin.png');
+            $table->string('noTelp')->nullable();
+            $table->date('tglLahir')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('gender_id')->references('id')->on('genders')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 
@@ -39,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('users');
     }
 };

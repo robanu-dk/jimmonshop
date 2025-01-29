@@ -50,7 +50,7 @@
                                             <table style="width: 100%">
                                                 <tr>
                                                     <td>
-                                                        <p class="text-danger" style="min-width: 50%">Rp {{ $product->harga }}</p>
+                                                        <p class="text-danger" style="min-width: 50%">Rp {{ number_format($product->harga,2,".",",") }}</p>
                                                     </td>
                                                     <td>
                                                         <p class="text-muted text-end">Tersisa {{ $product->jumlah }}</p>

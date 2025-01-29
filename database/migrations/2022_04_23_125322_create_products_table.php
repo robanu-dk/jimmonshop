@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kategori_id');
-            $table->foreignId('admin_id');
+            $table->unsignedBigInteger('kategori_id');
+            $table->unsignedBigInteger('admin_id');
             $table->string('nama_produk');
             $table->string('slug')->unique();
             $table->string('image')->default('logo-jimm-on-shop.png');
@@ -24,6 +24,9 @@ return new class extends Migration
             $table->float('harga');
             $table->string('deskripsi');
             $table->timestamps();
+
+            $table->foreign('kategori_id')->references('id')->on('kategoris')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

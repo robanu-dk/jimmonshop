@@ -11,7 +11,7 @@
                     <div class="card-body" style="height: 100%;">
                         <p class="card-title" style="font-size: 24px"><strong>{{ $product->nama_produk }}</strong></p>
                         <p class="card-text" style="font-size: 20px">
-                            <strong>Rp {{ $product->harga }}</strong>/package
+                            <strong>Rp {{ number_format($product->harga,2,".",",") }}</strong>/package
                         </p>
                         <form action="/products/{{ $product->slug }}/purchase" method="POST">
                             @csrf

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('admin_id');
+            $table->unsignedBigInteger('admin_id');
             $table->string('slug')->unique();
             $table->string('nama_event');
             $table->string('image')->default('contoh-poster.png');
@@ -26,6 +26,8 @@ return new class extends Migration
             $table->text('benefits');
             $table->integer('kuota');
             $table->timestamps();
+
+            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

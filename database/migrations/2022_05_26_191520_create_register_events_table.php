@@ -15,13 +15,16 @@ return new class extends Migration
     {
         Schema::create('register_events', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('event_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('event_id');
             $table->string('nama_pendaftar');
             $table->string('email');
             $table->string('asal_instansi');
             $table->string('noTelp');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('event_id')->references('id')->on('events')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 
